@@ -15,7 +15,7 @@ A new Sudoku every day — **Easy, Medium and Hard** — as an installable, offl
 
 ```sh
 npm install
-npm run dev       # dev server at http://localhost:5173/sudoku/
+npm run dev       # dev server at http://localhost:5173/
 npm test          # vitest
 npm run build     # typecheck + production build into dist/
 npm run preview   # serve the production build
@@ -50,7 +50,7 @@ If you change generation logic, bump `SEED_VERSION` in `src/engine/daily.ts`.
 - `.github/workflows/deploy.yml` — on push to `main`: install, test, build, deploy to GitHub Pages.
 - `.github/workflows/puzzles.yml` — monthly (and manual): keeps the current month plus two ahead generated and commits any new files.
 
-One-time setup: **Settings → Pages → Source: GitHub Actions**. The site is served from `/sudoku/` (`base` in `vite.config.ts`; change it if you rename the repo).
+One-time setup: **Settings → Pages → Source: GitHub Actions**. The site is served at https://sudoku.nathanlopez.com/ (custom domain via a Cloudflare CNAME to `lopeznathan.github.io`), so `base` in `vite.config.ts` is `/`.
 
 ## Project layout
 

@@ -1,9 +1,9 @@
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
-// GitHub Pages serves project sites from /<repo>/.
+// Served from the custom domain root (sudoku.nathanlopez.com).
 export default defineConfig({
-  base: '/sudoku/',
+  base: '/',
   plugins: [
     VitePWA({
       registerType: 'autoUpdate',
@@ -12,8 +12,8 @@ export default defineConfig({
         name: 'Daily Sudoku',
         short_name: 'Sudoku',
         description: 'A new Sudoku every day — Easy, Medium and Hard.',
-        start_url: '/sudoku/',
-        scope: '/sudoku/',
+        start_url: '/',
+        scope: '/',
         display: 'standalone',
         background_color: '#f3ede1',
         theme_color: '#d8432b',

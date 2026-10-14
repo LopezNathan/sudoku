@@ -14,7 +14,7 @@ export function dayView(date: string): View {
   const el = h('section', { class: 'home' });
 
   const cards = h('div', { class: 'cards' });
-  el.append(h('h1', {}, isToday ? 'Today' : formatLong(date)));
+  el.append(h('h1', { class: isToday ? '' : 'long-date' }, isToday ? 'Today' : formatLong(date)));
   if (isToday) el.append(h('p', { class: 'muted' }, formatLong(date)));
   el.append(cards);
 

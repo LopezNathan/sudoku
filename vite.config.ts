@@ -15,8 +15,8 @@ export default defineConfig({
         start_url: '/sudoku/',
         scope: '/sudoku/',
         display: 'standalone',
-        background_color: '#ffffff',
-        theme_color: '#2563eb',
+        background_color: '#f3ede1',
+        theme_color: '#d8432b',
         icons: [
           { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png' },
           { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png' },
@@ -26,6 +26,11 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png}'],
         runtimeCaching: [
+          {
+            urlPattern: ({ url }) => url.origin === 'https://fonts.googleapis.com' || url.origin === 'https://fonts.gstatic.com',
+            handler: 'CacheFirst',
+            options: { cacheName: 'fonts', expiration: { maxEntries: 20, maxAgeSeconds: 60 * 60 * 24 * 365 }, cacheableResponse: { statuses: [0, 200] } },
+          },
           {
             urlPattern: ({ url }) => url.pathname.includes('/puzzles/') && url.pathname.endsWith('.json'),
             handler: 'StaleWhileRevalidate',

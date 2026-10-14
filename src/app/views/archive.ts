@@ -43,7 +43,16 @@ export function archiveView(month: string): View {
       month < thisMonth ? h('a', { class: 'btn', href: `#/archive/${next}`, 'aria-label': 'Next month' }, '›') : h('span', { class: 'btn disabled' }, '›'),
     ),
     grid,
-    h('p', { class: 'muted legend' }, 'Dots: 🟢 easy · 🟡 medium · 🔴 hard. Archive solves don’t count toward streaks.'),
+    h('p', { class: 'legend' },
+      h('span', { class: 'muted' }, 'Dots: '),
+      h('i', { class: 'dot easy on' }),
+      ' easy · ',
+      h('i', { class: 'dot medium on' }),
+      ' medium · ',
+      h('i', { class: 'dot hard on' }),
+      ' hard',
+      h('span', { class: 'muted' }, ' Archive solves don\u2019t count toward streaks'),
+    ),
   );
   return { el, destroy() {} };
 }

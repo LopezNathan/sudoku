@@ -729,7 +729,20 @@ button.primary {
 }
 
 .legend {
-  font-size: 0.85rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.legend .dot {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  flex-shrink: 0;
 }
 
 /* ---- stats ---- */

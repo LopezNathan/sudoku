@@ -399,6 +399,36 @@ button.primary {
   font-weight: 700;
 }
 
+.pause-btn {
+  font-size: 1.2rem;
+  padding: 0.2rem 0.5rem;
+  background: none;
+  border: 1px solid currentColor;
+  border-radius: 0.4rem;
+  color: inherit;
+  cursor: pointer;
+}
+
+.pause-overlay {
+  display: none;
+}
+
+.play.paused .board,
+.play.paused .controls,
+.play.paused .message {
+  display: none;
+}
+
+.play.paused .pause-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--size);
+  height: var(--size);
+  max-width: 100%;
+  margin: 0 auto;
+}
+
 .board {
   width: var(--size);
   height: var(--size);

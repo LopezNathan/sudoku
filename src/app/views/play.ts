@@ -20,6 +20,7 @@ export function playView(date: string, level: Level, puzzle: DailyPuzzle): View 
 
   const timerEl = h('div', { class: 'timer', role: 'timer', 'aria-label': 'Elapsed time' });
   const message = h('div', { class: 'message', 'aria-live': 'polite' });
+  const pauseBtn = h('button', { class: 'pause-btn', 'aria-label': 'Pause', onClick: () => setPaused(!paused) }, '⏸');
 
   const board = createBoard(game, (i) => {
     game.select(i);
@@ -97,11 +98,23 @@ export function playView(date: string, level: Level, puzzle: DailyPuzzle): View 
     window.clearInterval(interval);
     interval = undefined;
   }
+  let paused = false;
+  function setPaused(value: boolean): void {
+    if (game.done) return;
+    paused = value;
+    el.classList.toggle('paused', paused);
+    pauseBtn.textContent = paused ? '▶' : '⏸';
+    pauseBtn.setAttribute('aria-label', paused ? 'Resume' : 'Pause');
+    if (paused) {
+      stopTimer();
+      save();
+    } else startTimer();
+  }
   const onVisibility = () => {
     if (document.hidden) {
       stopTimer();
       save();
-    } else startTimer();
+    } else if (!paused) startTimer();
   };
   document.addEventListener('visibilitychange', onVisibility);
   window.addEventListener('pagehide', onVisibility);
@@ -110,6 +123,11 @@ export function playView(date: string, level: Level, puzzle: DailyPuzzle): View 
   const onKey = (e: KeyboardEvent) => {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     if (document.querySelector('.overlay')) return;
+    if (e.key === 'p' || e.key === 'P') {
+      setPaused(!paused);
+      return;
+    }
+    if (paused) return;
     if (/^[1-9]$/.test(e.key)) act(() => game.input(Number(e.key)));
     else if (e.key === 'Backspace' || e.key === 'Delete' || e.key === '0') act(() => game.erase());
     else if (e.key === 'n' || e.key === 'N') {
@@ -134,10 +152,12 @@ export function playView(date: string, level: Level, puzzle: DailyPuzzle): View 
       h('a', { class: 'back', href: '#/', 'aria-label': 'Back' }, '←'),
       h('div', { class: 'play-title' }, h('strong', {}, `${meta.emoji} ${meta.name}`), h('span', { class: 'muted' }, formatLong(date))),
       timerEl,
+      pauseBtn,
     ),
     board.el,
     message,
     controls.el,
+    h('div', { class: 'pause-overlay' }, h('button', { onClick: () => setPaused(false) }, '▶ Resume')),
     game.done &&
       h('button', { class: 'results-btn', onClick: () => (closeModal = showComplete(date, level, game.toProgress())) }, 'View results'),
   );
